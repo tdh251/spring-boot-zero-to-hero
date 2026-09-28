@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tranduchai.masterspringboot.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import com.tranduchai.masterspringboot.dto.record.UserRequestRecord;
-import com.tranduchai.masterspringboot.dto.response.UserResponse;
+import com.tranduchai.masterspringboot.dto.record.UserResponseRecord;
 
 @RestController
 @RequestMapping(value = "/api/v1/users")
@@ -28,18 +29,19 @@ public class UserController {
    private final UserService userService;
 
    @GetMapping
-   public ResponseEntity<List<UserResponse>> showListUser() {
+   public ResponseEntity<List<UserResponseRecord>> showListUser() {
       return new ResponseEntity<>(userService.index(), HttpStatus.OK);
    }
 
    @PostMapping
-   public ResponseEntity<String> createNewUser(@RequestBody UserRequestRecord userRequest) {
+   public ResponseEntity<String> createNewUser(@Valid @RequestBody UserRequestRecord userRequest) {
       userService.create(userRequest);
       return new ResponseEntity<>("Create a new user sussessfully", HttpStatus.CREATED);
    }
 
    @PutMapping("/{id}")
-   public ResponseEntity<String> updateUser(@PathVariable("id") String id, @RequestBody UserRequestRecord userRequest) {
+   public ResponseEntity<String> updateUser(@PathVariable("id") String id,
+         @Valid @RequestBody UserRequestRecord userRequest) {
       userService.update(id, userRequest);
       return new ResponseEntity<>("Update a user successfully", HttpStatus.OK);
    }

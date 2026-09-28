@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.tranduchai.masterspringboot.dto.record.UserRequestRecord;
 import com.tranduchai.masterspringboot.dto.record.UserResponseRecord;
-import com.tranduchai.masterspringboot.dto.response.UserResponse;
 import com.tranduchai.masterspringboot.entity.User;
 import com.tranduchai.masterspringboot.mapper.UserMapper;
 import com.tranduchai.masterspringboot.repository.UserRepository;
