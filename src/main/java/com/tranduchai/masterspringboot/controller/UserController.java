@@ -18,25 +18,27 @@ import com.tranduchai.masterspringboot.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import com.tranduchai.masterspringboot.common.ApiResponse;
+import com.tranduchai.masterspringboot.common.BaseController;
 import com.tranduchai.masterspringboot.dto.record.UserRequestRecord;
 import com.tranduchai.masterspringboot.dto.record.UserResponseRecord;
 
 @RestController
 @RequestMapping(value = "/api/v1/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController extends BaseController {
 
    private final UserService userService;
 
    @GetMapping
-   public ResponseEntity<List<UserResponseRecord>> showListUser() {
-      return new ResponseEntity<>(userService.index(), HttpStatus.OK);
+   public ApiResponse<List<UserResponseRecord>> showListUser() {
+      return createSuccessResponse(userService.index());
    }
 
    @PostMapping
-   public ResponseEntity<String> createNewUser(@Valid @RequestBody UserRequestRecord userRequest) {
+   public ApiResponse<String> createNewUser(@Valid @RequestBody UserRequestRecord userRequest) {
       userService.create(userRequest);
-      return new ResponseEntity<>("Create a new user sussessfully", HttpStatus.CREATED);
+      return createSuccessResponse("Create a new user sussessfully");
    }
 
    @PutMapping("/{id}")
