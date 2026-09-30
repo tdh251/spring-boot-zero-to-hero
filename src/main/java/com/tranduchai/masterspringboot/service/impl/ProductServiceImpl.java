@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode;
 import org.springframework.stereotype.Service;
 
 import com.tranduchai.masterspringboot.dto.record.ProductResponseRecord;
@@ -17,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+// Ano -> để chuẩn hóa lại cấu trúc Page sang format DTO chuẩn khi trả về JSON:
+@EnableSpringDataWebSupport(pageSerializationMode = PageSerializationMode.VIA_DTO)
 public class ProductServiceImpl implements ProductService {
 
    private final ProductRepository productRepository;
@@ -33,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
       // Lấy products với nhiều giá trị filters kết hợp sử dụng JPA Specification
       Page<Product> products = productRepository
-            .findAll(ProductSpecification.filterProducts("Điện thoại", BigDecimal.valueOf(2500), category), pageable);
+            .findAll(ProductSpecification.filterProducts("nokia", BigDecimal.valueOf(3000), category), pageable);
       return products.map(productMapper::toResponse);
    }
 
